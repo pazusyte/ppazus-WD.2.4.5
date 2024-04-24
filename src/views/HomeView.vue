@@ -1,11 +1,11 @@
 <template>
+  <h2>Pick a Date to Log Your Expenses:</h2>
   <main>
     <DatePicker :selectedDate="selectedDate" />
-    <ExpenseList :header="'Home Expenses'" :expenses="expenses" />
   </main>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import DatePicker from '../components/DatePicker.vue';
 import { ref } from 'vue';
 

@@ -5,7 +5,7 @@ body {
   height: 100vh;
   margin: 0;
   min-height: 100vh;
-  color: #ffffff;
+  color: #fff;
   background-color: #2d2d3b;
   transition:
     color 0.5s,
@@ -25,7 +25,7 @@ body {
     'Helvetica Neue',
     sans-serif;
   font-size: 15px;
-  text-rendering: optimizeLegibility;
+  text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

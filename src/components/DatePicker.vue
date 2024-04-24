@@ -6,19 +6,25 @@
         <div class="dropdown">
           <select id="year" v-model="selectedYear" @change="updateSelectedDate">
             <option disabled selected value="">Year</option>
-            <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
+            <option v-for="year in years" :key="year" :value="year">
+              {{ year }}
+            </option>
           </select>
         </div>
         <div class="dropdown">
           <select id="month" v-model="selectedMonth" @change="updateSelectedDate">
             <option disabled selected value="">Month</option>
-            <option v-for="month in months" :key="month" :value="month">{{ month }}</option>
+            <option v-for="month in months" :key="month" :value="month">
+              {{ month }}
+            </option>
           </select>
         </div>
         <div class="dropdown">
           <select id="day" v-model="selectedDay" @change="updateSelectedDate">
             <option disabled selected value="">Day</option>
-            <option v-for="day in daysInMonth" :key="day" :value="day">{{ day }}</option>
+            <option v-for="day in daysInMonth" :key="day" :value="day">
+              {{ day }}
+            </option>
           </select>
         </div>
         <button class="date-button" @click="goToSelected(1)">&gt;</button>
@@ -32,22 +38,22 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, watch, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { generateOptions, padZero } from './dates/dateHelpers.js'
 
 const router = useRouter()
-const currentYear = new Date().getFullYear()
-const selectedYear = ref(currentYear)
-const selectedMonth = ref(null)
-const selectedDay = ref(null)
+const currentYear: number = new Date().getFullYear()
+const selectedYear = ref<number>(currentYear)
+const selectedMonth = ref<number | null>(null)
+const selectedDay = ref<number | null>(null)
 
 const years = generateOptions(1900, 2100)
 const months = generateOptions(1, 12)
-const daysInMonth = ref([])
+const daysInMonth = ref<number[]>([])
 
-function updateSelectedDate() {
+function updateSelectedDate(): void {
   if (selectedYear.value && selectedMonth.value && selectedDay.value) {
     const newDate = new Date(selectedYear.value, selectedMonth.value - 1, selectedDay.value)
     const formattedDate = `${newDate.getFullYear()}-${padZero(newDate.getMonth() + 1)}-${padZero(newDate.getDate())}`
@@ -55,19 +61,21 @@ function updateSelectedDate() {
   }
 }
 
-function goToToday(offset) {
+function goToToday(offset: number): void {
   const currentDate = new Date()
   currentDate.setDate(currentDate.getDate() + offset)
   goToDay(currentDate)
 }
 
-function goToSelected(offset) {
-  const selectedDate = new Date(selectedYear.value, selectedMonth.value - 1, selectedDay.value)
-  selectedDate.setDate(selectedDate.getDate() + offset)
-  goToDay(selectedDate)
+function goToSelected(offset: number): void {
+  if (selectedYear.value && selectedMonth.value && selectedDay.value) {
+    const selectedDate = new Date(selectedYear.value, selectedMonth.value - 1, selectedDay.value)
+    selectedDate.setDate(selectedDate.getDate() + offset)
+    goToDay(selectedDate)
+  }
 }
 
-function goToDay(date) {
+function goToDay(date: Date): void {
   selectedYear.value = date.getFullYear()
   selectedMonth.value = date.getMonth() + 1
   selectedDay.value = date.getDate()
@@ -77,7 +85,7 @@ function goToDay(date) {
 watch([selectedYear, selectedMonth], () => {
   const year = selectedYear.value
   const month = selectedMonth.value
-  if (year && month) {
+  if (year !== null && month !== null) {
     const daysInSelectedMonth = new Date(year, month, 0).getDate()
     daysInMonth.value = generateOptions(1, daysInSelectedMonth)
   }
@@ -86,7 +94,8 @@ watch([selectedYear, selectedMonth], () => {
 onMounted(() => {
   const { params } = router.currentRoute.value
   if (params.date) {
-    const [year, month, day] = params.date.split('-').map(Number)
+    const dateParam = params.date as string
+    const [year, month, day] = dateParam.split('-').map(Number)
     selectedYear.value = year
     selectedMonth.value = month
     selectedDay.value = day
