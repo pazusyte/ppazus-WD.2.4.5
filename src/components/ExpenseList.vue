@@ -1,10 +1,9 @@
 <template>
   <div>
     <h2>Expenses</h2>
-    <div class="row">
+    <div class="col-md-12">
       <input v-model="newExpenseName" placeholder="Expense Name" class="expense-input" />
       <input v-model="newExpenseAmount" placeholder="Expense Amount" class="expense-input" />
-      <span>€</span>
       <select v-model="selectedExpenseType" class="expense-dropdown">
         <option value="" disabled selected>Expense Type</option>
         <option value="essential">Essential</option>
@@ -29,12 +28,12 @@
       <li v-for="(expense, index) in filteredExpenses" :key="index" class="expense-item">
         <span class="expense-name">{{ expense.name }}</span>
         <span class="expense-amount">{{ expense.amount }}</span>
-        <span class="expense-type">€{{ expense.expenseType }}</span>
+        <span class="expense-type">{{ expense.expenseType }}</span>
         <span class="expense-category">{{ expense.expenseCategory }}</span>
         <button @click="editExpense(store, index)" class="small-expense-button" id="edit">
           Edit
         </button>
-        <button @click="confirmDelete(index)" class="small-expense-button" id="delete">
+        <button @click="confirmDelete(expense)" class="small-expense-button" id="delete">
           Delete
         </button>
       </li>
@@ -46,12 +45,13 @@
 import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { generateExpense } from './expenses/Expense'
+import type { Expense } from './expenses/Expense'
 import useExpensesStore from '@/store'
 
 const store = useExpensesStore()
 const route = useRoute()
 const newExpenseName = ref('')
-const newExpenseAmount = ref(0)
+const newExpenseAmount = ref<number | null>(null)
 
 const selectedDate = computed(() => {
   const date = Array.isArray(route.params.date) ? route.params.date.join(',') : route.params.date
@@ -62,21 +62,36 @@ let selectedExpenseType = ''
 let selectedExpenseCategory = ''
 let error = ref('')
 
+function isValidExpenseAmount(amount: number): boolean {
+  return amount !== 0 && !/\.\d{3,}/.test(amount.toString())
+}
+
 function addNewExpense() {
-  if (newExpenseName.value.trim() !== '' && newExpenseAmount.value !== 0) {
+  const amount: number | null = newExpenseAmount.value !== null ? newExpenseAmount.value : null
+
+  if (
+    newExpenseName.value.trim() !== '' &&
+    selectedExpenseType !== '' &&
+    selectedExpenseCategory !== '' &&
+    amount !== null &&
+    !isNaN(amount) &&
+    isValidExpenseAmount(amount)
+  ) {
     const newExpense = generateExpense(
       newExpenseName.value,
-      newExpenseAmount.value,
+      amount,
       selectedDate.value,
       selectedExpenseType,
       selectedExpenseCategory
     )
     store.addExpense(newExpense)
     newExpenseName.value = ''
-    newExpenseAmount.value = 0
+    newExpenseAmount.value = null
+    selectedExpenseType = ''
+    selectedExpenseCategory = ''
     error.value = ''
   } else {
-    error.value = 'Please enter both the expense name and amount'
+    error.value = 'Please enter a valid expense name, type, and category, and amount'
   }
 }
 
@@ -96,15 +111,21 @@ function editExpense(store: any, index: number) {
   }
 }
 
-function confirmDelete(index: number) {
+function confirmDelete(expense: Expense): void {
   const isConfirmed = confirm('Do you really want to delete this expense?')
   if (isConfirmed) {
-    store.deleteExpense(index)
+    const index = store.expenses.indexOf(expense)
+    if (index !== -1) {
+      store.deleteExpense(index)
+    }
   }
 }
 </script>
 
 <style scoped>
+.col-md-12 {
+  display: flex;
+}
 .expense-input {
   border: 1px solid #ccc;
   border-radius: 4px;

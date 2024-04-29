@@ -1,47 +1,52 @@
 <template>
-  <div class="date-picker">
-    <div class="options">
-      <div class="row">
-        <button class="date-button" @click="goToSelected(-1)">&lt;</button>
+  <div class="container">
+    <div class="row" id="row1">
+      <div class="col-md-1">
+        <button v-if="showButton" class="date-button" @click="goToSelected(-1)">&lt;</button>
+      </div>
+      <div class="col-md-2">
         <div class="dropdown">
           <select id="year" v-model="selectedYear" @change="updateSelectedDate">
             <option disabled selected value="">Year</option>
-            <option v-for="year in years" :key="year" :value="year">
-              {{ year }}
-            </option>
+            <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
           </select>
         </div>
+      </div>
+      <div class="col-md-2">
         <div class="dropdown">
           <select id="month" v-model="selectedMonth" @change="updateSelectedDate">
             <option disabled selected value="">Month</option>
-            <option v-for="month in months" :key="month" :value="month">
-              {{ month }}
-            </option>
+            <option v-for="month in months" :key="month" :value="month">{{ month }}</option>
           </select>
         </div>
+      </div>
+      <div class="col-md-2">
         <div class="dropdown">
           <select id="day" v-model="selectedDay" @change="updateSelectedDate">
             <option disabled selected value="">Day</option>
-            <option v-for="day in daysInMonth" :key="day" :value="day">
-              {{ day }}
-            </option>
+            <option v-for="day in daysInMonth" :key="day" :value="day">{{ day }}</option>
           </select>
         </div>
-        <button class="date-button" @click="goToSelected(1)">&gt;</button>
       </div>
-      <div class="row">
+      <div class="col-md-1">
+        <button v-if="showButton" class="date-button" @click="goToSelected(1)">&gt;</button>
+      </div>
+    </div>
+    <div class="row" id="row2">
+      <div class="col-md-6">
         <button class="date-button" @click="goToToday(-1)">Yesterday</button>
+      </div>
+      <div class="col-md-6">
         <button class="date-button" @click="goToToday(0)">Today</button>
-        <button class="date-button" @click="goToToday(1)">Tomorrow</button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { generateOptions, padZero } from './dates/dateHelpers.js'
+import { generateOptions, padZero } from './dates/dateHelpers'
 
 const router = useRouter()
 const currentYear: number = new Date().getFullYear()
@@ -52,6 +57,8 @@ const selectedDay = ref<number | null>(null)
 const years = generateOptions(1900, 2100)
 const months = generateOptions(1, 12)
 const daysInMonth = ref<number[]>([])
+
+const showButton = computed(() => router.currentRoute.value.path !== '/')
 
 function updateSelectedDate(): void {
   if (selectedYear.value && selectedMonth.value && selectedDay.value) {
@@ -107,32 +114,22 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.date-picker {
-  display: flex;
-  flex-direction: column;
-}
-
-.options {
-  display: flex;
-  flex-direction: column;
-}
-
-.options .row {
+.row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  padding-bottom: 10px;
 }
 
-.options .row > * {
-  margin: 0 0.2rem;
-}
-
-.date-picker select {
+.dropdown select {
   border: 1px solid #ccc;
   border-radius: 4px;
-  padding: 0.5rem;
-  height: 2rem;
+  height: 3rem;
+  width: 5rem;
+}
+
+.col-md-1 .date-button {
+  width: 3rem;
 }
 
 .date-button {
@@ -140,11 +137,11 @@ onMounted(() => {
   color: white;
   font-weight: bold;
   border-radius: 4px;
-  padding: 0.5rem 1rem;
-  background-color: #336a80;
+  background-color: rgb(36, 92, 190);
   cursor: pointer;
   transition: background-color 0.3s ease;
-  height: 2rem;
+  height: 3rem;
+  width: 10rem;
 }
 
 .date-button:hover {
