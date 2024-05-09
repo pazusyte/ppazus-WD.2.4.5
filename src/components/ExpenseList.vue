@@ -1,16 +1,25 @@
 <template>
   <div>
-    <h2>Expenses</h2>
     <div class="col-md-12">
-      <input v-model="newExpenseName" placeholder="Expense Name" class="expense-input" />
-      <input v-model="newExpenseAmount" placeholder="Expense Amount" class="expense-input" />
-      <select v-model="selectedExpenseType" class="expense-dropdown">
-        <option value="" disabled selected>Expense Type</option>
+      <input
+        v-model="newExpenseName"
+        id="expenseName"
+        placeholder="Enter Expense Name"
+        class="expense-input"
+      />
+      <input
+        v-model="newExpenseAmount"
+        id="expenseAmount"
+        placeholder="Enter Expense Amount"
+        class="expense-input"
+      />
+      <select v-model="selectedExpenseType" id="expenseType" class="expense-dropdown">
+        <option value="" disabled selected>Select Type</option>
         <option value="essential">Essential</option>
         <option value="non-essential">Non-Essential</option>
       </select>
-      <select v-model="selectedExpenseCategory" class="expense-dropdown">
-        <option value="" disabled selected>Expense Category</option>
+      <select v-model="selectedExpenseCategory" id="expenseCategory" class="expense-dropdown">
+        <option value="" disabled selected>Select Category</option>
         <option value="groceries">Groceries</option>
         <option value="rent-utilities">Rent/Utilities</option>
         <option value="taxes">Taxes</option>
@@ -22,29 +31,37 @@
         <option value="misc">Miscellaneous</option>
       </select>
       <button @click="addNewExpense" class="expense-button">Add</button>
-      <p v-if="error" class="errorMessage">{{ error }}</p>
+      <p v-if="error" class="errorMessage" role="alert">{{ error }}</p>
     </div>
-    <ul>
-      <li v-for="(expense, index) in filteredExpenses" :key="index" class="expense-item">
-        <span class="expense-name">{{ expense.name }}</span>
-        <span class="expense-amount">{{ expense.amount }}</span>
-        <span class="expense-type">{{ expense.expenseType }}</span>
-        <span class="expense-category">{{ expense.expenseCategory }}</span>
+    <div class="expense-details" role="table" aria-label="Expense Details">
+      <div class="expense-row" role="row">
+        <p><strong>Name</strong></p>
+        <p><strong>Amount</strong></p>
+        <p><strong>Type</strong></p>
+        <p><strong>Category</strong></p>
+      </div>
+      <div class="expense-row" v-for="(expense, index) in filteredExpenses" :key="index" role="row">
+        <p role="cell">{{ expense.name }}</p>
+        <p role="cell">€{{ expense.amount }}</p>
+        <p role="cell">{{ expense.expenseType }}</p>
+        <p role="cell">{{ expense.expenseCategory }}</p>
         <button @click="editExpense(store, index)" class="small-expense-button" id="edit">
-          Edit
+          Edit Name
         </button>
         <button @click="confirmDelete(expense)" class="small-expense-button" id="delete">
           Delete
         </button>
-      </li>
-    </ul>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import '@/components/expenses/expenseList.css'
 import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { generateExpense } from './expenses/Expense'
+import { isValidExpenseAmount } from './expenses/expenseHelpers'
 import type { Expense } from './expenses/Expense'
 import useExpensesStore from '@/store'
 
@@ -61,10 +78,6 @@ const selectedDate = computed(() => {
 let selectedExpenseType = ''
 let selectedExpenseCategory = ''
 let error = ref('')
-
-function isValidExpenseAmount(amount: number): boolean {
-  return amount !== 0 && !/\.\d{3,}/.test(amount.toString())
-}
 
 function addNewExpense() {
   const amount: number | null = newExpenseAmount.value !== null ? newExpenseAmount.value : null
@@ -121,84 +134,3 @@ function confirmDelete(expense: Expense): void {
   }
 }
 </script>
-
-<style scoped>
-.col-md-12 {
-  display: flex;
-}
-.expense-input {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 0.5rem;
-  height: 1rem;
-  flex-grow: 1;
-}
-
-.expense-dropdown {
-  margin-left: 0.5rem;
-}
-
-.expense-button {
-  border: none;
-  color: white;
-  font-weight: bold;
-  border-radius: 4px;
-  padding: 0.5rem 1rem;
-  background-color: #336a80;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  height: 2rem;
-  margin-left: 0.5rem;
-}
-
-.expense-button:hover {
-  background-color: #77c4e6;
-}
-
-.errorMessage {
-  color: red;
-  font-size: 0.8rem;
-  margin-top: 0.5rem;
-}
-
-.row {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.5rem;
-}
-
-.expense-item {
-  display: flex;
-  align-items: center;
-  margin: 0;
-  padding: 0.2rem;
-}
-
-ul {
-  padding: 0;
-  margin: 0;
-}
-
-.expense-checkbox {
-  margin-right: 0.2rem;
-}
-
-.small-expense-button {
-  border: none;
-  color: white;
-  font-weight: bold;
-  border-radius: 4px;
-  padding: 0.3rem 0.5rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  height: 1rem;
-  margin-right: 0.2rem;
-  margin-left: 0.2rem;
-  font-size: 0.5rem;
-  background-color: #234b5a;
-}
-
-.small-expense-button:hover {
-  background-color: #77c4e6;
-}
-</style>

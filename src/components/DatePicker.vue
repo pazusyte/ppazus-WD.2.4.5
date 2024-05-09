@@ -2,11 +2,19 @@
   <div class="container">
     <div class="row" id="row1">
       <div class="col-md-1">
-        <button v-if="showButton" class="date-button" @click="goToSelected(-1)">&lt;</button>
+        <button
+          v-if="showButton"
+          class="date-button"
+          @click="goToSelected(-1)"
+          aria-label="Previous month"
+        >
+          &lt;
+        </button>
       </div>
       <div class="col-md-2">
         <div class="dropdown">
-          <select id="year" v-model="selectedYear" @change="updateSelectedDate">
+          <label for="year">Year:</label>
+          <select id="year" v-model="selectedYear" @change="updateSelectedDate" aria-live="polite">
             <option disabled selected value="">Year</option>
             <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
           </select>
@@ -14,7 +22,13 @@
       </div>
       <div class="col-md-2">
         <div class="dropdown">
-          <select id="month" v-model="selectedMonth" @change="updateSelectedDate">
+          <label for="month">Month:</label>
+          <select
+            id="month"
+            v-model="selectedMonth"
+            @change="updateSelectedDate"
+            aria-live="polite"
+          >
             <option disabled selected value="">Month</option>
             <option v-for="month in months" :key="month" :value="month">{{ month }}</option>
           </select>
@@ -22,14 +36,22 @@
       </div>
       <div class="col-md-2">
         <div class="dropdown">
-          <select id="day" v-model="selectedDay" @change="updateSelectedDate">
+          <label for="day">Day:</label>
+          <select id="day" v-model="selectedDay" @change="updateSelectedDate" aria-live="polite">
             <option disabled selected value="">Day</option>
             <option v-for="day in daysInMonth" :key="day" :value="day">{{ day }}</option>
           </select>
         </div>
       </div>
       <div class="col-md-1">
-        <button v-if="showButton" class="date-button" @click="goToSelected(1)">&gt;</button>
+        <button
+          v-if="showButton"
+          class="date-button"
+          @click="goToSelected(1)"
+          aria-label="Next month"
+        >
+          &gt;
+        </button>
       </div>
     </div>
     <div class="row" id="row2">
@@ -116,8 +138,8 @@ onMounted(() => {
 <style scoped>
 .row {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: flex-start;
+  justify-content: space-evenly;
   padding-bottom: 10px;
 }
 

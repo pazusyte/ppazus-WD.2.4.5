@@ -1,0 +1,84 @@
+.col-md-12 {
+  display: flex;
+}
+.expense-input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.5rem;
+  flex-grow: 1;
+  margin-right: 0.5rem;
+  height: 2rem;
+}
+
+.expense-details {
+  margin-top: 1rem;
+}
+
+.expense-details p {
+  margin-right: 1rem;
+}
+
+.expense-dropdown {
+  margin-left: 0.5rem;
+}
+
+.expense-button {
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  background-color: rgb(36, 92, 190);
+  cursor: pointer;
+  transition: 0.3s ease;
+  height: 2rem;
+  margin-left: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.expense-button:hover {
+  background-color: #77c4e6;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.expense-row {
+  display: flex;
+  align-items: center;
+}
+
+.expense-item {
+  margin-right: 1rem;
+}
+
+.small-expense-button {
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 4px;
+  padding: 0.3rem 0.5rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+  height: 1.5rem;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  background-color: rgb(36, 92, 190);
+  margin-right: 0.5rem;
+}
+
+.small-expense-button:hover {
+  background-color: #77c4e6;
+}

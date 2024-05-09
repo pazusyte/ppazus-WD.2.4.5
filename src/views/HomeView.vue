@@ -2,14 +2,14 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6">
-        <section class="date-picker">
-          <h2>Pick a Date to Log Your Expenses:</h2>
-          <DatePicker :selectedDate="selectedDate" />
+        <section class="date-picker" aria-labelledby="date-picker-heading">
+          <h2 id="date-picker-heading">Pick a Date to Log Your Expenses</h2>
+          <DatePicker :selectedDate="selectedDate" aria-label="Select date to log expenses" />
         </section>
       </div>
       <div class="col-md-6">
-        <section class="expense-summary">
-          <h2>You've spent:</h2>
+        <section class="expense-summary" aria-labelledby="expense-summary-heading">
+          <h2 id="expense-summary-heading">Expense Summary</h2>
           <p>
             Monthly Expenses:
             {{ monthlyExpenses.toLocaleString('en-US', { style: 'currency', currency: 'EUR' }) }}
@@ -53,14 +53,17 @@ h2 {
 }
 
 .date-picker {
-  padding: 30px;
-  height: 100%;
+  padding: 20px;
+  height: 30vh;
   background-color: white;
+  width: 110%;
+  margin-left: -10%;
 }
 
 .expense-summary {
-  padding: 30px;
-  height: 100%;
+  padding: 20px;
+  height: 30vh;
   background-color: white;
+  width: 110%;
 }
 </style>

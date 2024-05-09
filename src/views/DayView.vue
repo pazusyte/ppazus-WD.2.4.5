@@ -2,13 +2,14 @@
   <div class="container">
     <div class="row">
       <div class="col-md-4">
-        <section class="date-picker">
-          <h2>Expenses for:</h2>
-          <DatePicker :selectedDate="selectedDate" />
+        <section class="date-picker" aria-labelledby="date-picker-heading">
+          <h2 id="date-picker-heading">Select Date</h2>
+          <DatePicker :selectedDate="selectedDate" aria-label="Select date" />
         </section>
       </div>
       <div class="col-md-8">
-        <section class="expense-summary">
+        <section class="expense-summary" aria-labelledby="expense-summary-heading">
+          <h2 id="expense-summary-heading">Day Expenses</h2>
           <ExpenseList :header="'Day Expenses'" :expenses="expenses" />
         </section>
       </div>
@@ -43,17 +44,20 @@ h2 {
 }
 
 .date-picker {
-  display: flex; /* Add flexbox */
-  flex-direction: column; /* Arrange items vertically */
-  align-items: flex-start; /* Align items to start of container */
-  padding: 30px;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  width: 120%;
+  margin-left: -20%;
   background-color: white;
+  height: 50vh;
 }
 
 .expense-summary {
-  padding: 30px;
-  height: 100%;
+  padding: 20px;
+  width: 110%;
   background-color: white;
+  height: 50vh;
 }
 </style>

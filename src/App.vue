@@ -1,15 +1,17 @@
 <template>
   <header>
-    <RouterLink :to="{ name: 'HomeView' }">
-      <h1>Expense Tracker</h1>
-    </RouterLink>
+    <h1>
+      <router-link :to="{ name: 'HomeView' }" class="link" id="tracker"
+        >Expense Tracker</router-link
+      >
+      <router-link :to="{ name: 'SummaryView' }" class="link" id="summary"
+        >Expense Summary</router-link
+      >
+    </h1>
   </header>
   <div id="app">
     <router-view />
   </div>
-  <RouterLink :to="{ name: 'SummaryView' }">
-    <h1>Expense Summary</h1>
-  </RouterLink>
 </template>
 
 <script setup lang="ts">

@@ -1,6 +1,6 @@
 import type { Expense } from './Expense'
 
-function getExpensesFromLocalStorage(): Expense[] {
+export function getExpensesFromLocalStorage(): Expense[] {
   const storedExpenses = localStorage?.getItem('expenses')
   if (!storedExpenses) {
     return []
@@ -8,7 +8,7 @@ function getExpensesFromLocalStorage(): Expense[] {
   return JSON.parse(storedExpenses)
 }
 
-function filterExpensesByDate(expenses: Expense[], targetDate: Date): Expense[] {
+export function filterExpensesByDate(expenses: Expense[], targetDate: Date): Expense[] {
   return expenses.filter((expense) => {
     const expenseDate = new Date(expense.date)
     return (
@@ -19,7 +19,47 @@ function filterExpensesByDate(expenses: Expense[], targetDate: Date): Expense[] 
   })
 }
 
-function calculateTotalExpense(expenses: Expense[]): number {
+export function calculateTypeSumForMonth(month: number, year: number): Record<string, number> {
+  const expenses = getExpensesFromLocalStorage()
+  const filteredExpenses = expenses.filter((expense) => {
+    const expenseDate = new Date(expense.date)
+    return expenseDate.getMonth() === month && expenseDate.getFullYear() === year
+  })
+
+  const typeSum: Record<string, number> = {}
+
+  expenses.forEach((expense) => {
+    typeSum[expense.expenseType] = 0
+  })
+
+  filteredExpenses.forEach((expense) => {
+    typeSum[expense.expenseType] += Number(expense.amount)
+  })
+
+  return typeSum
+}
+
+export function calculateCategorySumForMonth(month: number, year: number): Record<string, number> {
+  const expenses = getExpensesFromLocalStorage()
+  const filteredExpenses = expenses.filter((expense) => {
+    const expenseDate = new Date(expense.date)
+    return expenseDate.getMonth() === month && expenseDate.getFullYear() === year
+  })
+
+  const categorySum: Record<string, number> = {}
+
+  expenses.forEach((expense) => {
+    categorySum[expense.expenseCategory] = 0
+  })
+
+  filteredExpenses.forEach((expense) => {
+    categorySum[expense.expenseCategory] += Number(expense.amount)
+  })
+
+  return categorySum
+}
+
+export function calculateTotalExpense(expenses: Expense[]): number {
   return expenses.reduce((total, expense) => {
     return total + Number(expense.amount)
   }, 0)
