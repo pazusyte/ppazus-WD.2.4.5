@@ -1,7 +1,14 @@
 <template>
-  <div class="container">
-    <div class="row" id="row1">
-      <div class="col-md-1">
+  <table>
+    <tr>
+      <th></th>
+      <th>Year</th>
+      <th>Month</th>
+      <th>Day</th>
+      <th></th>
+    </tr>
+    <tr>
+      <td role="cell">
         <button
           v-if="showButton"
           class="date-button"
@@ -10,19 +17,17 @@
         >
           &lt;
         </button>
-      </div>
-      <div class="col-md-2 col-sm-3">
+      </td>
+      <td role="cell">
         <div class="dropdown">
-          <label for="year">Year:</label>
           <select id="year" v-model="selectedYear" @change="updateSelectedDate" aria-live="polite">
             <option disabled selected value="">Year</option>
             <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
           </select>
         </div>
-      </div>
-      <div class="col-md-2 col-sm-3">
+      </td>
+      <td role="cell">
         <div class="dropdown">
-          <label for="month">Month:</label>
           <select
             id="month"
             v-model="selectedMonth"
@@ -33,17 +38,16 @@
             <option v-for="month in months" :key="month" :value="month">{{ month }}</option>
           </select>
         </div>
-      </div>
-      <div class="col-md-2 col-sm-3">
+      </td>
+      <td role="cell">
         <div class="dropdown">
-          <label for="day">Day:</label>
           <select id="day" v-model="selectedDay" @change="updateSelectedDate" aria-live="polite">
             <option disabled selected value="">Day</option>
             <option v-for="day in daysInMonth" :key="day" :value="day">{{ day }}</option>
           </select>
         </div>
-      </div>
-      <div class="col-md-1">
+      </td>
+      <td>
         <button
           v-if="showButton"
           class="date-button"
@@ -52,17 +56,16 @@
         >
           &gt;
         </button>
-      </div>
-    </div>
-    <div class="row" id="row2">
-      <div class="col-md-6">
-        <button class="date-button" @click="goToToday(-1)">Yesterday</button>
-      </div>
-      <div class="col-md-6">
-        <button class="date-button" @click="goToToday(0)">Today</button>
-      </div>
-    </div>
-  </div>
+      </td>
+    </tr>
+    <tr>
+      <td><button class="date-button" @click="goToToday(-1)">Yesterday</button></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><button class="date-button" @click="goToToday(0)">Today</button></td>
+    </tr>
+  </table>
 </template>
 
 <script setup lang="ts">
@@ -136,28 +139,12 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.row {
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
-  padding-bottom: 10px;
-}
-
-.col-md-2 {
-  padding: 20px;
-  margin-bottom: -20px;
-}
-
 .dropdown select {
   border: 1px solid #ccc;
   border-radius: 4px;
   height: 3rem;
   width: 5rem;
   margin-bottom: 10px;
-}
-
-.col-md-1 .date-button {
-  width: 3rem;
 }
 
 .date-button {
@@ -169,7 +156,7 @@ onMounted(() => {
   cursor: pointer;
   transition: 0.3s ease;
   height: 3rem;
-  width: 10rem;
+  width: 6rem;
   margin-bottom: 10px;
 }
 
@@ -177,17 +164,20 @@ onMounted(() => {
   background-color: #77c4e6;
 }
 
-@media (max-width: 768px) {
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding-bottom: 10px;
+@media (max-width: 767px) {
+  td button {
+    font-size: 10px;
+    width: 100%;
   }
-  .col-md-1,
-  .col-md-2 {
-    flex: 1;
-    max-width: none;
+  .date-button {
+    width: 100%;
+  }
+  .dropdown select {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 3rem;
+    width: 4rem;
+    margin-bottom: 10px;
   }
 }
 </style>

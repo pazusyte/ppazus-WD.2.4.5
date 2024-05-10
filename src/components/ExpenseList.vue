@@ -34,26 +34,29 @@
       <button @click="addNewExpense" class="expense-button">Add</button>
       <p v-if="error" class="errorMessage" role="alert">{{ error }}</p>
     </div>
-    <div class="expense-details" role="table" aria-label="Expense Details">
-      <div class="expense-row" role="row">
-        <p><strong>Name</strong></p>
-        <p><strong>Amount</strong></p>
-        <p><strong>Type</strong></p>
-        <p><strong>Category</strong></p>
-      </div>
-      <div class="expense-row" v-for="(expense, index) in filteredExpenses" :key="index" role="row">
-        <p role="cell">{{ expense.name }}</p>
-        <p role="cell">€{{ expense.amount }}</p>
-        <p role="cell">{{ expense.expenseType }}</p>
-        <p role="cell">{{ expense.expenseCategory }}</p>
-        <button @click="editExpense(store, index)" class="small-expense-button" id="edit">
-          Edit Name
-        </button>
-        <button @click="confirmDelete(expense)" class="small-expense-button" id="delete">
-          Delete
-        </button>
-      </div>
-    </div>
+    <table class="expense-details" role="table" aria-label="Expense Details">
+      <tr>
+        <th>Name</th>
+        <th>Amount</th>
+        <th>Type</th>
+        <th>Category</th>
+        <th>Actions</th>
+      </tr>
+      <tr v-for="(expense, index) in filteredExpenses" :key="index" role="row">
+        <td role="cell">{{ expense.name }}</td>
+        <td role="cell">€{{ expense.amount }}</td>
+        <td role="cell">{{ expense.expenseType }}</td>
+        <td role="cell">{{ expense.expenseCategory }}</td>
+        <td>
+          <button @click="editExpense(store, index)" class="small-expense-button" id="edit">
+            Edit
+          </button>
+          <button @click="confirmDelete(expense)" class="small-expense-button" id="delete">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </table>
   </div>
 </template>
 

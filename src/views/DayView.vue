@@ -46,14 +46,14 @@ h2 {
 .date-picker {
   padding: 20px;
   background-color: white;
-  height: 50vh;
+  height: auto;
   width: 80%;
 }
 
 .expense-summary {
   padding: 20px;
   background-color: white;
-  height: 50vh;
+  height: auto;
   width: 120%;
   margin-left: -20%;
 }
