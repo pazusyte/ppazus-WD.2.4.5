@@ -84,7 +84,8 @@ const monthlyTypeExpenses = ref<{ [key: string]: number }>({})
 const monthlyCategoryExpenses = ref<{ [key: string]: number }>({})
 
 function updateExpenses() {
-  monthlyExpenses.value = calculateExpensesForMonth(selectedMonth.value, selectedYear.value)
+  const currentMonth = selectedMonth.value - 1
+  monthlyExpenses.value = calculateExpensesForMonth(currentMonth, selectedYear.value)
   monthlyTypeExpenses.value = calculateTypeSumForMonth(selectedMonth.value, selectedYear.value)
   monthlyCategoryExpenses.value = calculateCategorySumForMonth(
     selectedMonth.value,

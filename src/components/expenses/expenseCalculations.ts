@@ -23,7 +23,7 @@ export function calculateTypeSumForMonth(month: number, year: number): Record<st
   const expenses = getExpensesFromLocalStorage()
   const filteredExpenses = expenses.filter((expense) => {
     const expenseDate = new Date(expense.date)
-    return expenseDate.getMonth() === month && expenseDate.getFullYear() === year
+    return expenseDate.getMonth() + 1 === month && expenseDate.getFullYear() === year
   })
 
   const typeSum: Record<string, number> = {}
@@ -43,7 +43,7 @@ export function calculateCategorySumForMonth(month: number, year: number): Recor
   const expenses = getExpensesFromLocalStorage()
   const filteredExpenses = expenses.filter((expense) => {
     const expenseDate = new Date(expense.date)
-    return expenseDate.getMonth() === month && expenseDate.getFullYear() === year
+    return expenseDate.getMonth() + 1 === month && expenseDate.getFullYear() === year
   })
 
   const categorySum: Record<string, number> = {}
