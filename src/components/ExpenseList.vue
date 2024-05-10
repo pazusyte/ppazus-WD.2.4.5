@@ -48,7 +48,7 @@
         <td role="cell">{{ expense.expenseType }}</td>
         <td role="cell">{{ expense.expenseCategory }}</td>
         <td>
-          <button @click="editExpense(store, index)" class="small-expense-button" id="edit">
+          <button @click="editExpense(store, expense)" class="small-expense-button" id="edit">
             Edit
           </button>
           <button @click="confirmDelete(expense)" class="small-expense-button" id="delete">
@@ -121,10 +121,13 @@ const filteredExpenses = computed(() => {
   return expenses.value.filter((expense) => expense.date === selectedDate.value)
 })
 
-function editExpense(store: any, index: number) {
+function editExpense(store: any, expense: Expense) {
   const newName = prompt('Edit the expense name:')
   if (newName !== null && newName.trim() !== '') {
-    store.editExpense(index, newName)
+    const index = store.expenses.indexOf(expense)
+    if (index !== -1) {
+      store.editExpense(index, newName)
+    }
   }
 }
 
