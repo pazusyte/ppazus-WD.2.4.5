@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row" id="row1">
-      <div class="col-md-4">
+      <div class="col-md-5 col-sm-12 mb-4">
         <h2>Monthly Expense Report For:</h2>
         <div class="dropdown">
           <label for="year">Select Year:</label>
@@ -28,8 +28,8 @@
           </select>
         </div>
       </div>
-      <div class="col-md-8">
-        <section class="expense-summary">
+      <div class="col-md-7 col-sm-12">
+        <section class="expense-summary mt-4">
           <h2>You've spent:</h2>
           <p>
             Total Expenses:
@@ -101,51 +101,43 @@ updateExpenses()
 <style scoped>
 .row {
   display: flex;
+  flex-wrap: nowrap;
   justify-content: space-evenly;
   padding-bottom: 10px;
 }
 
-.expense-summary {
-  margin-left: 50px;
+.col-md-5,
+.col-md-7 {
+  padding: 20px;
+  background-color: white;
+  margin-right: 20px;
 }
 
 .dropdown select {
   border: 1px solid #ccc;
   border-radius: 4px;
   height: 3rem;
-  width: 5rem;
-  margin-right: 10px;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
-.col-md-1 .date-button {
-  width: 3rem;
+.expense-summary {
+  margin-top: 20px;
 }
 
-.date-button {
-  border: none;
-  color: white;
-  font-weight: bold;
-  border-radius: 4px;
-  background-color: rgb(36, 92, 190);
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  height: 3rem;
-  width: 10rem;
+.expense-summary h2,
+.expense-summary h3 {
+  margin-top: 20px;
 }
 
-.date-button:hover {
-  background-color: #77c4e6;
+.expense-summary ul {
+  padding-left: 20px;
 }
 
-.col-md-4 {
-  padding: 20px;
-  height: 50vh;
-  background-color: white;
-}
-
-.col-md-8 {
-  padding: 20px;
-  height: 50vh;
-  background-color: white;
+@media (max-width: 768px) {
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+  }
 }
 </style>

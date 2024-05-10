@@ -11,7 +11,7 @@
           &lt;
         </button>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-2 col-sm-3">
         <div class="dropdown">
           <label for="year">Year:</label>
           <select id="year" v-model="selectedYear" @change="updateSelectedDate" aria-live="polite">
@@ -20,7 +20,7 @@
           </select>
         </div>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-2 col-sm-3">
         <div class="dropdown">
           <label for="month">Month:</label>
           <select
@@ -34,7 +34,7 @@
           </select>
         </div>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-2 col-sm-3">
         <div class="dropdown">
           <label for="day">Day:</label>
           <select id="day" v-model="selectedDay" @change="updateSelectedDate" aria-live="polite">
@@ -138,9 +138,14 @@ onMounted(() => {
 <style scoped>
 .row {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-evenly;
+  align-items: flex-end;
+  justify-content: flex-start;
   padding-bottom: 10px;
+}
+
+.col-md-2 {
+  padding: 20px;
+  margin-bottom: -20px;
 }
 
 .dropdown select {
@@ -148,6 +153,7 @@ onMounted(() => {
   border-radius: 4px;
   height: 3rem;
   width: 5rem;
+  margin-bottom: 10px;
 }
 
 .col-md-1 .date-button {
@@ -161,12 +167,27 @@ onMounted(() => {
   border-radius: 4px;
   background-color: rgb(36, 92, 190);
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: 0.3s ease;
   height: 3rem;
   width: 10rem;
+  margin-bottom: 10px;
 }
 
 .date-button:hover {
   background-color: #77c4e6;
+}
+
+@media (max-width: 768px) {
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-bottom: 10px;
+  }
+  .col-md-1,
+  .col-md-2 {
+    flex: 1;
+    max-width: none;
+  }
 }
 </style>

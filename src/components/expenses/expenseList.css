@@ -1,13 +1,17 @@
 .col-md-12 {
   display: flex;
+  flex-wrap: wrap;
 }
+
 .expense-input {
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 0.5rem;
   flex-grow: 1;
   margin-right: 0.5rem;
-  height: 2rem;
+  height: 2.5rem;
+  flex: 1;
+  margin-bottom: 0.5rem;
 }
 
 .expense-details {
@@ -20,6 +24,8 @@
 
 .expense-dropdown {
   margin-left: 0.5rem;
+  flex: 1;
+  margin-bottom: 0.5rem;
 }
 
 .expense-button {
@@ -31,11 +37,13 @@
   background-color: rgb(36, 92, 190);
   cursor: pointer;
   transition: 0.3s ease;
-  height: 2rem;
+  height: auto;
   margin-left: 0.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex: 1;
+  margin-bottom: 0.5rem;
 }
 
 .expense-button:hover {
@@ -81,4 +89,10 @@
 
 .small-expense-button:hover {
   background-color: #77c4e6;
+}
+
+@media (min-width: 1280px) {
+  .col-md-12 {
+    flex-direction: row;
+  }
 }

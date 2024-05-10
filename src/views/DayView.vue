@@ -1,13 +1,13 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-12 col-lg-6">
         <section class="date-picker" aria-labelledby="date-picker-heading">
           <h2 id="date-picker-heading">Select Date</h2>
           <DatePicker :selectedDate="selectedDate" aria-label="Select date" />
         </section>
       </div>
-      <div class="col-md-8">
+      <div class="col-md-12 col-lg-6">
         <section class="expense-summary" aria-labelledby="expense-summary-heading">
           <h2 id="expense-summary-heading">Day Expenses</h2>
           <ExpenseList :header="'Day Expenses'" :expenses="expenses" />
@@ -44,20 +44,32 @@ h2 {
 }
 
 .date-picker {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
   padding: 20px;
-  width: 120%;
-  margin-left: -20%;
   background-color: white;
   height: 50vh;
+  width: 80%;
 }
 
 .expense-summary {
   padding: 20px;
-  width: 110%;
   background-color: white;
   height: 50vh;
+  width: 120%;
+  margin-left: -20%;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 100%;
+
+  margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+  .date-picker,
+  .expense-summary {
+    width: 100%;
+    margin-left: 0;
+  }
 }
 </style>

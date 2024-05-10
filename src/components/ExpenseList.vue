@@ -12,6 +12,7 @@
         id="expenseAmount"
         placeholder="Enter Expense Amount"
         class="expense-input"
+        type="number"
       />
       <select v-model="selectedExpenseType" id="expenseType" class="expense-dropdown">
         <option value="" disabled selected>Select Type</option>
@@ -22,13 +23,7 @@
         <option value="" disabled selected>Select Category</option>
         <option value="groceries">Groceries</option>
         <option value="rent-utilities">Rent/Utilities</option>
-        <option value="taxes">Taxes</option>
-        <option value="going-out">Going-Out</option>
-        <option value="shopping">Shopping</option>
-        <option value="home">Home</option>
-        <option value="health-beauty">Health/Beauty</option>
-        <option value="transport">Transport</option>
-        <option value="misc">Miscellaneous</option>
+        <!-- Other options -->
       </select>
       <button @click="addNewExpense" class="expense-button">Add</button>
       <p v-if="error" class="errorMessage" role="alert">{{ error }}</p>
